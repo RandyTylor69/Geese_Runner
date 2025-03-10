@@ -94,4 +94,31 @@ public class CampusWalk {
             }
         } return null;
     }
+
+    public String findPath() {
+        StackADT<Hexagon> s = new ArrayStack<>();
+        boolean running = true;
+        StringBuilder st = new StringBuilder();
+
+        s.push(map.getStart());
+        map.getStart().markInStack();
+
+        while (!s.isEmpty() && running) {
+            Hexagon curr = s.peek();
+            st.append(curr.getID());
+            if (curr.isEnd()) {
+                running = false;
+                break;
+            }
+
+            Hexagon next = findBest(curr);
+            if (next==null){
+                s.pop();
+                curr.markOutStack();
+            }
+        }
+
+        if (!running) return st.toString();
+        else return "No path found";
+    }
 }
