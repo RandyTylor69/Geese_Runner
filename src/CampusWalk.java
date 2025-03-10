@@ -121,4 +121,8 @@ public class CampusWalk {
         if (!running) return st.toString();
         else return "No path found";
     }
+
+    public void exit() {
+        map.exit();
+    }
 }
