@@ -1,3 +1,11 @@
+/*
+CS 1027B – Assignment 3
+Name: Ziyin Mao
+Student Number: 251428503
+Email: Zmao47@uwo.ca
+Created: March 10, 2025
+*/
+
 public class CampusWalk {
     private Map map;
 
