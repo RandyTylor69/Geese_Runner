@@ -1,0 +1,5 @@
+First line: #rows, #columns. Other lines: S-start, E-end, F-grass, W-snow, G-goose, B-book
+3 3
+S F F 
+ G W B
+E F F 
