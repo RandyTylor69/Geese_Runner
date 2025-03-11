@@ -18,7 +18,7 @@ public class Tests {
 		try {
 			
 			Hexagon.TIME_DELAY = 0;
-			walk = new CampusWalk("map1.txt", false);
+			walk = new CampusWalk("map1.txt", true);
 			String res = walk.findPath();
 			String exp = "0 1 2 5 8 7 6";
 			
