@@ -31,100 +31,65 @@ public class CampusWalk {
     public Hexagon findBest(Hexagon cell) {
 
         Hexagon bestCell = null;
-        boolean selected  = false; // created purely to distinguish two cells with 0 adjacent goose cells
+        int cellVal;
+        int bestCellVal =0;
+        int bestCellGooseCount = 0;
+        int gooseCount;
 
         for (int i = 0; i<=5; i++) {
 
             Hexagon nextCell = cell.getNeighbour(i);
 
-            // check 0: not null cell
-            if (nextCell != null) {
+            if (nextCell!=null) {
+                if (nextCell.isEnd()) {
+                    bestCell = nextCell;
+                    return bestCell;
+                } if (!nextCell.isGooseCell()) {
+                    if (neighbourGooseCount(nextCell)<3) {
+                        if(!nextCell.isMarked()) {
 
-                //System.out.println();
-
-                //System.out.println("  checking cell number" + nextCell.getID());
-
-                // check 1: not goose cell
-                if (!nextCell.isGooseCell()) {
-
-                    // check 2: goose count < 3
-                    if (neighbourGooseCount(nextCell) < 3 || nextCell.isEnd()) {
-
-                        // check 3: not marked cell
-                        if (!nextCell.isMarked()) {
-
-
-                            // 3.1
-                            for (int j = 0; j <= 5; j++) {
-                                Hexagon neighbourCell = cell.getNeighbour(j);
-                                if (neighbourCell != null && neighbourCell.isEnd()) {
-                                    bestCell = neighbourCell;
-                                    return bestCell; }
-                            }
-
-                            if (nextCell.isEnd()) { return nextCell; }
-
-                            // 3.2
-                            else if (nextCell.isBookCell()) {
-                                for (int j = 0; j <= 5; j++) {
-                                    Hexagon neighbourCell = cell.getNeighbour(j);
-                                    if (neighbourCell!=null && neighbourCell.isBookCell()) {
-                                        bestCell = neighbourCell;
-                                    }
+                            if (nextCell.isBookCell()) {
+                                cellVal = 3;
+                                if (cellVal > bestCellVal) {
+                                    bestCell = nextCell;
+                                    bestCellVal = cellVal;
                                 }
-                                //System.out.println("cell number " + bestCell.getID() + " is returned");
-                                return bestCell;
                             }
 
-
-                            // 3.3
                             else if (nextCell.isGrassCell()) {
+                                cellVal = 2;
 
-                                int gooseCount = 6; // max allowed gooseCount on a cell + 1
+                                // here comes the FUCKING GOOSE CHECK OH LAWRD HERE HE COMETH
+                                gooseCount = neighbourGooseCount(nextCell);
 
-                                for (int j = 0; j <= 5; j++) { // looping through curr's neighbours
+                                if (cellVal > bestCellVal || gooseCount < bestCellGooseCount) {
 
-                                    if (cell.getNeighbour(j) != null) {
+                                    bestCell = nextCell;
+                                    bestCellVal = cellVal;
+                                    bestCellGooseCount = gooseCount;
 
-                                        Hexagon neighbourCell = cell.getNeighbour(j);
-
-                                        if (neighbourGooseCount(neighbourCell) < gooseCount
-                                    && neighbourCell.isGrassCell()) {
-                                            //System.out.println("best grass cell checking: number " + neighbourCell.getID() + "(has " + neighbourGooseCount(neighbourCell) + " goose neighbors)");
-
-                                            if (neighbourGooseCount(neighbourCell) == 0 && !selected) {
-                                                bestCell = neighbourCell;
-                                                selected = true;
-                                            } else if (neighbourGooseCount(neighbourCell) != 0){
-                                                bestCell = neighbourCell;
-                                            }
-                                        }
-                                    }
                                 }
-
-                               // System.out.println("cell number " + bestCell.getID() + " is returned");
-                                return bestCell;
                             }
 
-                            // 3.4
                             else if (nextCell.isSnowCell()) {
-                                for (int j = 0; j <= 5; j++) {
-                                    Hexagon neighbourCell = cell.getNeighbour(j);
-                                    if (cell.getNeighbour(j)!=null && cell.getNeighbour(j).isSnowCell()) {
-                                        bestCell = neighbourCell;
-                                    }
+                                cellVal = 1;
+                                if (cellVal > bestCellVal) {
+                                    bestCell = nextCell;
+                                    bestCellVal = cellVal;
                                 }
-                                System.out.println("cell number " + bestCell.getID() + " is returned");
-                                return bestCell;
                             }
 
                         }
+
                     }
                 }
             }
         }
+        if (bestCell!=null) {
+            return bestCell;
+        } else return null;
 
-        return null;
+
     }
 
     public String findPath() {

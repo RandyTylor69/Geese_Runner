@@ -6,9 +6,9 @@ public class Tests {
 		// It may help to run just one test at a time until it is working correctly.
 		// Debugging is usually easier on isolated test cases.
 		
-		test1();
+		//test1();
 		//test2();
-		//test3();
+		test3();
 
 	}
 	
@@ -43,7 +43,7 @@ public class Tests {
 		try {
 
 			Hexagon.TIME_DELAY = 0;
-			walk = new CampusWalk("map2.txt", false);
+			walk = new CampusWalk("map2.txt", true);
 			String res = walk.findPath();
 			String exp = "6 11 16 22 21 20 15 10 5 1 0 1 2 3 4 9 14 18";
 			
