@@ -43,6 +43,27 @@ public class ArrayStack <T> implements StackADT <T>{
         return top == array.length -1;
     }
 
+    public String toString() {
+
+
+        if (isEmpty()) return "Empty stack.";
+
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+
+        for(int i = top+1; i < array.length; i++) {
+
+           if(array[i]!=null) {
+
+               if (!first) sb.append(", ");
+               sb.append(array[i]);
+               first = false;
+
+            }
+        }
+        return sb.toString();
+    }
+
     public int size() {
         return getCapacity() - 1 - top;
     }
